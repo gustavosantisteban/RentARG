@@ -32,7 +32,7 @@ namespace RentARG.Domain.Commands.BaseCommand
             if (_notifications.HasNotifications()) return false;
             if (_uow.Commit()) return true;
 
-            _bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
+            _bus.RaiseEvent(new DomainNotification("Commit", "Tenemos un problema al guardar los datos."));
             return false;
         }
     }

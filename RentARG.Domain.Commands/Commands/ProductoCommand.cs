@@ -1,9 +1,10 @@
-﻿using RentARG.Domain.Core.Commands;
+﻿using RentARG.Aplicacion.ViewModels;
+using RentARG.Domain.Core.Commands;
 using System;
 
 namespace RentARG.Domain.Commands.Commands
 {
-    public abstract class ProductoCommand : Command
+    public class ProductoCommand : Command
     {
         public Guid Id { get; protected set; }
 
@@ -12,5 +13,26 @@ namespace RentARG.Domain.Commands.Commands
         public string Descripcion { get; protected set; }
 
         public DateTime FechaAlta { get; set; }
+
+
+        public void RegistrarProductoCommand(ProductoViewModel producto)
+        {
+            //this.Nombre = producto.Nombre;
+        }
+
+        public void ActualizarProductoCommand(ProductoViewModel producto)
+        {
+            //this.Nombre = producto.Nombre;
+        }
+
+        public void EliminarProductoCommand(Guid productoid)
+        {
+            //this.Nombre = producto.Nombre;
+        }
+
+        public override bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
