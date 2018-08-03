@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using RentARG.Aplicacion.ViewModels;
-using RentARG.Domain.Commands.Commands;
+using RentARG.Domain.Commands;
 using RentARG.Domain.Core.Bus;
 using RentARG.Repository;
 using System;

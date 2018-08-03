@@ -4,7 +4,7 @@ using RentARG.Domain.Core.Commands;
 using RentARG.Domain.Core.Notifications;
 using RentARG.Domain.Interfaces;
 
-namespace RentARG.Domain.Commands.BaseCommand
+namespace RentARG.Domain.CommandHandlers.BaseCommand
 {
     public class CommandHandler
     {

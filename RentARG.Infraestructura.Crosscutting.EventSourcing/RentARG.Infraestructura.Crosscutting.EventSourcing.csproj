@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentARG.Domain.Core\RentARG.Domain.Core.csproj" />
+    <ProjectReference Include="..\RentARG.Domain.Interfaces\RentARG.Domain.Interfaces.csproj" />
+    <ProjectReference Include="..\RentARG.Repository\RentARG.Repository.csproj" />
   </ItemGroup>
 
 </Project>

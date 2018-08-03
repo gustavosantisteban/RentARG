@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RentARG.Aplicacion.ViewModels;
-using RentARG.Domain.Commands.Commands;
+using RentARG.Domain.Commands;
 
 namespace RentARG.Aplicacion.AutoMapper
 {

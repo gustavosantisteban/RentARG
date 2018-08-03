@@ -2,7 +2,7 @@
 using RentARG.Domain.Core.Commands;
 using System;
 
-namespace RentARG.Domain.Commands.Commands
+namespace RentARG.Domain.Commands
 {
     public class ProductoCommand : Command
     {

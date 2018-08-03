@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentARG.Aplicacion.Services\RentARG.Aplicacion.Services.csproj" />
+    <ProjectReference Include="..\RentARG.Domain.CommandHandlers\RentARG.Domain.CommandHandlers.csproj" />
+    <ProjectReference Include="..\RentARG.Domain.Core\RentARG.Domain.Core.csproj" />
+    <ProjectReference Include="..\RentARG.Domain.EventHandlers\RentARG.Domain.EventHandlers.csproj" />
+    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.Bus\RentARG.Infraestructura.Crosscutting.Bus.csproj" />
+    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.EventSourcing\RentARG.Infraestructura.Crosscutting.EventSourcing.csproj" />
+    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.Identity\RentARG.Infraestructura.Crosscutting.Identity.csproj" />
+    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.Services\RentARG.Infraestructura.Crosscutting.Services.csproj" />
+    <ProjectReference Include="..\RentARG.Infraestructura.UnitOfWork\RentARG.Infraestructura.UnitOfWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Authorization">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.authorization\2.0.4\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

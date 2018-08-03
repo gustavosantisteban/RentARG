@@ -1,6 +1,6 @@
 ﻿using RentARG.Aplicacion.ViewModels;
 
-namespace RentARG.Domain.Commands.Commands
+namespace RentARG.Domain.Commands
 {
     public class RegistrarProductoCommand : ProductoCommand
     {
