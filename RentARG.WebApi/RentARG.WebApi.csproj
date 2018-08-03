@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink.Loader" Version="14.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentARG.Aplicacion.AutoMapper\RentARG.Aplicacion.AutoMapper.csproj" />
-    <ProjectReference Include="..\RentARG.Aplicacion.Services\RentARG.Aplicacion.Services.csproj" />
     <ProjectReference Include="..\RentARG.Infraestructura.Context.Data\RentARG.Infraestructura.Context.Data.csproj" />
     <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting,IoC\RentARG.Infraestructura.Crosscutting,IoC.csproj" />
-    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.Identity\RentARG.Infraestructura.Crosscutting.Identity.csproj" />
   </ItemGroup>
 
 </Project>

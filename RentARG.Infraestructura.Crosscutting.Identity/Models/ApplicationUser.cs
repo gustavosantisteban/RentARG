@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace RentARG.Infraestructura.Crosscutting.Identity
 {
-    public class ApplicationUser : IdentityUser<string>
+    public class ApplicationUser : IdentityUser
     {
-        public ApplicationUser()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,48 +13,47 @@ using RentARG.Infraestructura.Context.Data;
 using RentARG.Infraestructura.Crosscutting.Identity;
 using RentARG.Infraestructura.CrossCutting.Identity.Autorizations;
 using RentARG.Infraestructura.Crosscutting_IoC;
-using RentARG.UI.Web.Extensions;
+using RentARG.WebApi.Configurations;
+using System.IO;
 
-namespace RentARG.UI.Web
+namespace RentARG.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfigurationRoot Configuration { get; }
+
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o =>
-                {
-                    o.LoginPath = new PathString("/login");
-                    o.AccessDeniedPath = new PathString("/home/access-denied");
-                })
-                .AddFacebook(o =>
-                {
-                    o.AppId = Configuration["Authentication:Facebook:AppId"];
-                    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                })
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                });
+            services.AddWebApi(options =>
+            {
+                options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
+                options.UseCentralRoutePrefix(new RouteAttribute("api/v{version}"));
+            });
 
             services.AddAutoMapperSetup();
-            services.AddMvc();
 
             services.AddAuthorization(options =>
             {
@@ -61,42 +61,43 @@ namespace RentARG.UI.Web
                 options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new ClaimRequirement("Customers", "Remove")));
             });
 
+
             // Adding MediatR for Domain Events and Notifications
             services.AddMediatR(typeof(Startup));
 
             // .NET Native DI Abstraction
             RegisterServices(services);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-                                     IHostingEnvironment env,
-                                     ILoggerFactory loggerFactory,
-                                     IHttpContextAccessor accessor)
+                              IHostingEnvironment env,
+                              ILoggerFactory loggerFactory,
+                              IHttpContextAccessor accessor)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
-            else
+
+            app.UseCors(c =>
             {
-                app.UseExceptionHandler("/Home/Error");
-            }
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
 
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMvc();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(s =>
+            //{
+            //    s.SwaggerEndpoint("/swagger/v1/swagger.json", "RentARG System API v1.0");
+            //});
         }
 
         private static void RegisterServices(IServiceCollection services)

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RentARG.Domain.Commands.Commands;
+using RentARG.Domain.Commands;
 using RentARG.Resources.Labels;
 using System;
 

@@ -15,29 +15,29 @@ namespace RentARG.Domain.CommandHandlers
     {
         private readonly IProductoRepository productoRepository;
         private readonly IMediatorHandler Bus;
-        private readonly Producto producto;
+        //private readonly Producto producto;
 
         public ProductoCommandHandler(IProductoRepository _productoRepository,
                                       IUnitOfWork uow,
                                       IMediatorHandler bus,
-                                      Producto _producto,
+                                      //Producto _producto,
                                       INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
         {
             productoRepository = _productoRepository;
-            producto = _producto;
+            //producto = _producto;
             Bus = bus;
         }
 
-        public Task Handle(RegistrarProductoCommand command, CancellationToken cancellationToken)
+        public Task Handle(RegistrarProductoCommand request, CancellationToken cancellationToken)
         {
-            if (!command.IsValid())
+            if (!request.IsValid())
             {
-                NotifyValidationErrors(command);
+                NotifyValidationErrors(request);
                 return Task.CompletedTask;
             }
 
-            var producto = this.producto.RegistrarProducto(command);
-
+            var oproducto = new Producto();
+            var producto = oproducto.RegistrarProducto(request);
             productoRepository.Add(producto);
 
             if (Commit())
@@ -47,6 +47,26 @@ namespace RentARG.Domain.CommandHandlers
 
             return Task.CompletedTask;
         }
+
+        //public Task Handle(RegistrarProductoCommand command, CancellationToken cancellationToken)
+        //{
+        //    if (!command.IsValid())
+        //    {
+        //        NotifyValidationErrors(command);
+        //        return Task.CompletedTask;
+        //    }
+
+        //    var oproducto = new Producto();
+        //    var producto = oproducto.RegistrarProducto(command);
+        //    productoRepository.Add(producto);
+
+        //    if (Commit())
+        //    {
+        //        Bus.RaiseEvent(new ProductoRegisteredEvent(producto.Id, producto.Nombre, producto.Descripcion));
+        //    }
+
+        //    return Task.CompletedTask;
+        //}
 
     }
 }

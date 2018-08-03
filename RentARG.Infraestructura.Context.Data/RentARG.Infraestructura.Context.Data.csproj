@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TBB.EntityFrameworkCore.SqlServer" Version="0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentARG.Infraestructura.Crosscutting.Identity\RentARG.Infraestructura.Crosscutting.Identity.csproj" />
+  </ItemGroup>
+
+</Project>
